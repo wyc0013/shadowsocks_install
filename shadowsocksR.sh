@@ -13,8 +13,8 @@ clear
 echo
 echo "#############################################################"
 echo "# One click Install ShadowsocksR Server                     #"
-echo "# Intro: https://shadowsocks.be/9.html                      #"
-echo "# Author: Teddysun <i@teddysun.com>                         #"
+echo "# Author: wyc <wenyuchao@live.com>                          #"
+echo "# Thanks: @Teddysun <i@teddysun.com>                        #"
 echo "# Thanks: @breakwa11 <https://twitter.com/breakwa11>        #"
 echo "#############################################################"
 echo
@@ -87,8 +87,8 @@ function pre_install(){
     fi
     # Set ShadowsocksR config password
     echo "Please input password for ShadowsocksR:"
-    read -p "(Default password: teddysun.com):" shadowsockspwd
-    [ -z "$shadowsockspwd" ] && shadowsockspwd="teddysun.com"
+    read -p "(Default password: shadowsocksR):" shadowsockspwd
+    [ -z "$shadowsockspwd" ] && shadowsockspwd="shadowsocks"
     echo
     echo "---------------------------"
     echo "password = $shadowsockspwd"
@@ -210,15 +210,16 @@ function config_shadowsocks(){
 {
     "server":"0.0.0.0",
     "server_ipv6":"::",
-    "server_port":${shadowsocksport},
     "local_address":"127.0.0.1",
     "local_port":1080,
-    "password":"${shadowsockspwd}",
+    "port_password":{
+				"${shadowsocksport}":"${shadowsockspwd}"
+			},
     "timeout":120,
     "method":"aes-256-cfb",
-    "protocol":"origin",
+    "protocol":"auth_sha1_v2_compatible",
     "protocol_param":"",
-    "obfs":"plain",
+    "obfs":"tls1.2_ticket_auth_compatible",
     "obfs_param":"",
     "redirect":"",
     "dns_ipv6":false,
@@ -259,8 +260,8 @@ function install_ss(){
         echo -e "Password: \033[41;37m ${shadowsockspwd} \033[0m"
         echo -e "Local IP: \033[41;37m 127.0.0.1 \033[0m"
         echo -e "Local Port: \033[41;37m 1080 \033[0m"
-        echo -e "Protocol: \033[41;37m origin \033[0m"
-        echo -e "obfs: \033[41;37m plain \033[0m"
+        echo -e "Protocol: \033[41;37m auth_sha1_v2_compatible \033[0m"
+        echo -e "obfs: \033[41;37m tls1.2_ticket_auth_compatible \033[0m"
         echo -e "Encryption Method: \033[41;37m aes-256-cfb \033[0m"
         echo
         echo "Welcome to visit:https://shadowsocks.be/9.html"
